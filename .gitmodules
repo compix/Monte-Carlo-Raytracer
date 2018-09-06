@@ -1,0 +1,6 @@
+[submodule "third_party/RadeonRays"]
+	path = third_party/RadeonRays
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/RadeonRays_SDK.git
+[submodule "third_party/assimp"]
+	path = third_party/assimp
+	url = https://github.com/assimp/assimp.git

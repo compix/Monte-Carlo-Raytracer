@@ -1,0 +1,5 @@
+#include "RenderingSettings.h"
+
+ShadowSettings SHADOW_SETTINGS;
+RenderingSettings RENDERING_SETTINGS;
+SceneVisualizationSettings SCENE_VISUALIZATION_SETTINGS;
