@@ -885,51 +885,25 @@ __kernel void ConnectVertices(SCENE_PARAMS,
 				atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 2, tempRadianceBuffer[curConnectionRayIdx].z);
 			}
 #else
-			//if (t == 1)
-			//{
-			//	const int sampledCameraVertexIdx = bufferIdx * maxDepth + s - 2;
-			//	__global Vertex* sampled = sampledCameraVertices + sampledCameraVertexIdx;
-			//
-			//	if (isNotBlack(tempRadianceBuffer[curConnectionRayIdx].xyz))
-			//	{
-			//		const int radianceBufferIdx = sampled->radianceBufferIdx * 3;
-			//		atomicAdd_f(finalRadianceBuffer + radianceBufferIdx, tempRadianceBuffer[curConnectionRayIdx].x * misWeight);
-			//		atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 1, tempRadianceBuffer[curConnectionRayIdx].y * misWeight);
-			//		atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 2, tempRadianceBuffer[curConnectionRayIdx].z * misWeight);
-			//	}
-			//}
-			//else
-			//{
-			//	const int radianceBufferIdx = bufferIdx * 3;
-			//	atomicAdd_f(finalRadianceBuffer + radianceBufferIdx, tempRadianceBuffer[curConnectionRayIdx].x * misWeight);
-			//	atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 1, tempRadianceBuffer[curConnectionRayIdx].y * misWeight);
-			//	atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 2, tempRadianceBuffer[curConnectionRayIdx].z * misWeight);
-			//}
-
-			// Show individual results:
-			//if (s == 0 && t == 6)
-			{ 
-				//misWeight = 1.0f;
-				if (t == 1)
-				{
-					const int sampledCameraVertexIdx = bufferIdx * maxDepth + s - 2;
-					__global Vertex* sampled = sampledCameraVertices + sampledCameraVertexIdx;
+			if (t == 1)
+			{
+				const int sampledCameraVertexIdx = bufferIdx * maxDepth + s - 2;
+				__global Vertex* sampled = sampledCameraVertices + sampledCameraVertexIdx;
 			
-					if (isNotBlack(tempRadianceBuffer[curConnectionRayIdx].xyz))
-					{
-						const int radianceBufferIdx = sampled->radianceBufferIdx * 3;
-						atomicAdd_f(finalRadianceBuffer + radianceBufferIdx, tempRadianceBuffer[curConnectionRayIdx].x * misWeight);
-						atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 1, tempRadianceBuffer[curConnectionRayIdx].y * misWeight);
-						atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 2, tempRadianceBuffer[curConnectionRayIdx].z * misWeight);
-					}
-				}
-				else
+				if (isNotBlack(tempRadianceBuffer[curConnectionRayIdx].xyz))
 				{
-					const int radianceBufferIdx = bufferIdx * 3;
+					const int radianceBufferIdx = sampled->radianceBufferIdx * 3;
 					atomicAdd_f(finalRadianceBuffer + radianceBufferIdx, tempRadianceBuffer[curConnectionRayIdx].x * misWeight);
 					atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 1, tempRadianceBuffer[curConnectionRayIdx].y * misWeight);
 					atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 2, tempRadianceBuffer[curConnectionRayIdx].z * misWeight);
 				}
+			}
+			else
+			{
+				const int radianceBufferIdx = bufferIdx * 3;
+				atomicAdd_f(finalRadianceBuffer + radianceBufferIdx, tempRadianceBuffer[curConnectionRayIdx].x * misWeight);
+				atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 1, tempRadianceBuffer[curConnectionRayIdx].y * misWeight);
+				atomicAdd_f(finalRadianceBuffer + radianceBufferIdx + 2, tempRadianceBuffer[curConnectionRayIdx].z * misWeight);
 			}
 #endif
 			
